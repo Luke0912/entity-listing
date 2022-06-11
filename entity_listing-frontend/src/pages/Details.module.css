@@ -1,0 +1,18 @@
+.datagrid {
+  margin: auto;
+  box-sizing: border-box;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.datadiv {
+  width: 20%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  height: 160px;
+}
+.Image {
+  width: fit-content;
+  height: 100px;
+}

@@ -5,16 +5,34 @@ const httpStatus = require("http-status");
 const getproduct = async (req, res, err) => {
   try {
     let products;
-    const { type, category, sortBy } = req.query;
+    const { type, category, sortBy, page, pagesize } = req.query;
+    const skip = (page - 1) * pagesize;
+    const totalpage = Math.ceil(await Product.find().countDocuments());
     console.log(req.query);
     if (type && category) {
-      products = await Product.find({ type, category }).lean().exec();
+      products = await Product.find({ type, category })
+        .skip(skip)
+        .limit(pagesize)
+        .lean()
+        .exec();
     } else if (type) {
-      products = await Product.find({ type }).lean().exec();
+      products = await Product.find({ type })
+        .skip(skip)
+        .limit(pagesize)
+        .lean()
+        .exec();
     } else if (category) {
-      products = await Product.find({ category }).lean().exec();
+      products = await Product.find({ category })
+        .skip(skip)
+        .limit(pagesize)
+        .lean()
+        .exec();
     } else {
-      products = await Product.find({}).lean().exec();
+      products = await Product.find({})
+        .skip(skip)
+        .limit(pagesize)
+        .lean()
+        .exec();
     }
     // console.log(sortBy);
     if (sortBy) {
@@ -28,7 +46,6 @@ const getproduct = async (req, res, err) => {
         });
       }
     }
-
     res.status(httpStatus.OK).send(products);
   } catch (error) {
     return res.status(httpStatus.BAD_REQUEST).send({ message: error.message });

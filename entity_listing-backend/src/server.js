@@ -1,15 +1,18 @@
+var cors = require("cors");
+
 const connect = require("./configs/db");
 
-const router = require("./index")
+const router = require("./index");
 
 const express = require("express");
 
 const app = express();
 
+app.use(cors());
+
 app.use(express.json());
 
 app.use(router);
-
 
 app.listen(5000, async () => {
   try {
